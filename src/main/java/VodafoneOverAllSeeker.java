@@ -3,7 +3,12 @@
  */
 public class VodafoneOverAllSeeker extends VodafoneAbstractSeeker {
 
-    public VodafoneOverAllSeeker() {
-        super("https://www.vodafone.cz/vyhledavani/?q=", "&l=cs&c=17&sc=");
+    public VodafoneOverAllSeeker(int results) {
+        super("https://www.vodafone.cz/vyhledavani/?q=", "&l=cs&c=&sc=", "všechny kategorie", results);
     }
+
+    public VodafoneOverAllSeeker() {
+        super("https://www.vodafone.cz/vyhledavani/?q=", "&l=cs&c=&sc=", "všechny kategorie", 0);
+    }
+
 }

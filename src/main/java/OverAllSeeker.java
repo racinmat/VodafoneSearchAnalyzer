@@ -20,14 +20,26 @@ public class OverAllSeeker {
         }
     }
 
-    public List<SearchResult> searchForWords(List<String> words, int results) throws IOException {
-        List<SearchResult> resultWebsites = new ArrayList<SearchResult>();
+    public List<AbstractSearchResult> searchForWords(List<String> words, int results) throws IOException {
+        List<AbstractSearchResult> resultWebsites = new ArrayList<AbstractSearchResult>();
         for (String word : words)
             for (VodafoneAbstractSeeker seeker : seekers) {
                 System.out.println("Seeking word "+word+" by seeker "+seeker.getClass()+".");
-                List<SearchResult> resultsForOneWors = seeker.searchForWord(word, results);
-                resultWebsites.addAll(resultsForOneWors);
+                List<AbstractSearchResult> resultsForOneWord = seeker.searchForWord(word, results);
+                resultWebsites.addAll(resultsForOneWord);
             }
         return resultWebsites;
     }
+
+    public List<AbstractSearchResult> searchForWords(List<String> words) throws IOException {
+        List<AbstractSearchResult> resultWebsites = new ArrayList<AbstractSearchResult>();
+        for (String word : words)
+            for (VodafoneAbstractSeeker seeker : seekers) {
+                System.out.println("Seeking word "+word+" by seeker "+seeker.getClass()+".");
+                List<AbstractSearchResult> resultsForOneWord = seeker.searchForWord(word, seeker.getResults());
+                resultWebsites.addAll(resultsForOneWord);
+            }
+        return resultWebsites;
+    }
+
 }

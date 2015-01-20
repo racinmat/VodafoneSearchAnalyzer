@@ -22,12 +22,12 @@ public class MainAnalyzer {
 
     public static void main(String[] args) throws Exception {
         List<String> wordsToBeSearched = SearchWordsProvider.getWordsToBeSearched();
-        OverAllSeeker seeker = new OverAllSeeker(new VodafoneSelfServiceSeeker(), new VodafoneCareCenterSeeker(), new VodafoneOfferSeeker(), new VodafoneWorldManualsSeeker());
-        List<SearchResult> results = seeker.searchForWords(wordsToBeSearched, 5);
+        OverAllSeeker seeker = new OverAllSeeker(new VodafoneSelfServiceSeeker(5), new VodafoneCareCenterSeeker(5), new VodafoneOfferSeeker(5), new VodafoneWorldManualsSeeker(5), new VodafoneOverAllSeeker(10));
+        List<AbstractSearchResult> results = seeker.searchForWords(wordsToBeSearched);
         for (String word : wordsToBeSearched) {
             System.out.println(word);
         }
-        for (SearchResult result : results) {
+        for (AbstractSearchResult result : results) {
             System.out.println(result.toString());
         }
     }

@@ -15,23 +15,27 @@ public abstract class VodafoneAbstractSeeker {
 
     protected String prefix;
     protected String suffix;
+    protected String category;
+    protected int results;
 
 //    public abstract List<SearchResult> searchForWord(String word, int results) throws IOException;
 
-    public VodafoneAbstractSeeker(String prefix, String suffix) {
+    public VodafoneAbstractSeeker(String prefix, String suffix, String category, int results) {
         this.prefix = prefix;
         this.suffix = suffix;
+        this.category = category;
+        this.results = results;
     }
 
 //    public abstract List<String> getResults(String searchQuery, int results) throws IOException;
 
-    public List<SearchResult> searchForWord(String word, int results) throws IOException {
+    public List<AbstractSearchResult> searchForWord(String word, int results) throws IOException {
         System.out.println("Searching for word "+word+", will read first "+results+" results.");
         List<String> resultList = getResults(prefix+word+suffix, results);
         System.out.println("searching by query "+prefix+word+suffix);
-        List<SearchResult> resultObjects = new ArrayList<SearchResult>();
+        List<AbstractSearchResult> resultObjects = new ArrayList<AbstractSearchResult>();
         for (String result : resultList) {
-            resultObjects.add(SearchResultFactory.createSearchResult(result));
+            resultObjects.add(SearchResultFactory.createSearchResult(result, word, category));
         }
         return resultObjects;
     }
@@ -52,4 +56,14 @@ public abstract class VodafoneAbstractSeeker {
         return resultList;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public int getResults() {
+        if(results == 0) {
+            throw new RuntimeException("results not set");
+        }
+        return results;
+    }
 }

@@ -12,7 +12,7 @@ import java.io.IOException;
  */
 public class SearchResultFactory {
 
-    public static SearchResult createSearchResult(String url) throws IOException {
+    public static AbstractSearchResult createSearchResult(String url, String word, String category) throws IOException {
         System.out.println("creating results for "+url);
         Connection connection = Jsoup.connect(url);
         String descriptionString = "";
@@ -33,11 +33,10 @@ public class SearchResultFactory {
             } else {
                 keywordsString = keywords.attr("content");
             }
+            return new SearchResult(url, word, category, keywordsString, descriptionString);
         } catch (HttpStatusException e) {
-
+            return new NotExistingSearchResult(url, word, category);
         }
-        return new SearchResult(url, keywordsString, descriptionString);
-
     }
 
 }

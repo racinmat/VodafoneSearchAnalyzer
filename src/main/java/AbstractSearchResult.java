@@ -13,4 +13,13 @@ public class AbstractSearchResult {
         this.category = category;
     }
 
+    @Override
+    public String toString() {
+        return "AbstractSearchResult{" +
+                "url='" + url + '\'' +
+                ", searchedWord='" + searchedWord + '\'' +
+                ", category='" + category + '\'' +
+                '}';
+    }
+
 }

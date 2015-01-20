@@ -5,8 +5,8 @@ public class NotExistingSearchResult extends AbstractSearchResult {
 
     private String errorMessage;
 
-    public NotExistingSearchResult(String url) {
-        super(url);
+    public NotExistingSearchResult(String url, String word, String category) {
+        super(url, word, category);
         this.errorMessage = "404 error, stránka neexistuje.";
     }
 
@@ -14,6 +14,6 @@ public class NotExistingSearchResult extends AbstractSearchResult {
     public String toString() {
         return "NotExistingSearchResult{" +
                 "errorMessage='" + errorMessage + '\'' +
-                '}';
+                "} " + super.toString();
     }
 }
