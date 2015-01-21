@@ -18,9 +18,12 @@ import java.net.SocketTimeoutException;
  */
 public class SearchResultFactory {
 
-    private static boolean printDebugInfo = false;
+    private static boolean printDebugInfo = true;
 
-    public static AbstractSearchResult createSearchResult(String url, SearchedWord word, SeekingLocation location) throws IOException {
+    public static AbstractSearchResult createSearchResult(String url, SearchedWord word, SeekingLocation location, boolean lazy) throws IOException {
+        if (lazy) {
+            return new LazySearchResult(url, word, location);
+        }
         if (printDebugInfo) {
             System.out.println("creating results for "+url);
         }
@@ -56,6 +59,10 @@ public class SearchResultFactory {
                 return null;
             }
         }
+    }
+
+    public static AbstractSearchResult createSearchResult(LazySearchResult lazyResult) throws IOException {
+        return createSearchResult(lazyResult.getUrl(), lazyResult.getSearchedWord(), lazyResult.getLocation(), false);
     }
 
 }

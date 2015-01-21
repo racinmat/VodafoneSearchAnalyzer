@@ -2,6 +2,7 @@ package VodafoneSearchAnalyzer;
 
 import VodafoneSearchAnalyzer.SearchResult.ExcelOutput.WriteExcel;
 import VodafoneSearchAnalyzer.SearchResult.AbstractSearchResult;
+import VodafoneSearchAnalyzer.SearchResult.LazySearchResult;
 import VodafoneSearchAnalyzer.SearchResult.SearchResultsPersister;
 import VodafoneSearchAnalyzer.SearchedWord.SearchWordsProvider;
 import VodafoneSearchAnalyzer.SearchedWord.SearchedWord;
@@ -31,12 +32,18 @@ import java.util.List;
 public class MainAnalyzer {
 
     public static void main(String[] args) throws Exception {
-        List<SearchedWord> wordsToBeSearched = SearchWordsProvider.getWordsToBeSearched();
-        FileSerializer.serialize(wordsToBeSearched);
+//        List<SearchedWord> wordsToBeSearched = SearchWordsProvider.getWordsToBeSearched();
+//        FileSerializer.serialize(wordsToBeSearched);
 
-//        List<SearchedWord> wordsToBeSearched = FileSerializer.deserializeSearchedWords();
-//        VodafoneSearchAnalyzer.OverAllSeeker seeker = new VodafoneSearchAnalyzer.OverAllSeeker(new PublicWebSeeker(10));
-//        List<AbstractSearchResult> results = seeker.searchForWords(wordsToBeSearched);
+        List<SearchedWord> wordsToBeSearched = FileSerializer.deserializeSearchedWords();
+        System.out.println(wordsToBeSearched.size());
+        VodafoneSearchAnalyzer.OverAllSeeker seeker = new VodafoneSearchAnalyzer.OverAllSeeker(new PublicWebSeeker(10));
+        List<AbstractSearchResult> results = seeker.searchForWords(wordsToBeSearched, true);        //it is lazy
+        FileSerializer.serialize(results);
+
+//        List<LazySearchResult> results = FileSerializer.deserializeSearchResultsWithoutTags();
+//        List<AbstractSearchResult> loadedResults = seeker.lazyLoadResults(results);
+
 //        for (SearchedWord word : wordsToBeSearched) {
 //            System.out.println(word.toString());
 //        }
@@ -45,7 +52,7 @@ public class MainAnalyzer {
 //        }
 //        SearchResultsPersister persister = new SearchResultsPersister();
 //        persister.persistSearchResults(results);
-//        System.out.println("Everything is done.");
+        System.out.println("Everything is done.");
     }
 
 }

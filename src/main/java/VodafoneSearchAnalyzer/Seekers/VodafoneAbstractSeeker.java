@@ -24,7 +24,7 @@ public abstract class VodafoneAbstractSeeker {
     protected String suffix;
     protected SeekingLocation seekingLocation;
     protected int results;
-    private boolean printDebugInfo = false;
+    private boolean printDebugInfo = true;
 
 //    public abstract List<VodafoneSearchAnalyzer.SearchResult.SearchResult> searchForWord(String word, int results) throws IOException;
 
@@ -37,7 +37,7 @@ public abstract class VodafoneAbstractSeeker {
 
 //    public abstract List<String> getResults(String searchQuery, int results) throws IOException;
 
-    public List<AbstractSearchResult> searchForWord(SearchedWord word, int results, Category category) throws IOException {
+    public List<AbstractSearchResult> searchForWord(SearchedWord word, int results, Category category, boolean lazy) throws IOException {
         if (printDebugInfo) {
             System.out.println("Searching for word " + word + ", will read first " + results + " results.");
         }
@@ -46,18 +46,18 @@ public abstract class VodafoneAbstractSeeker {
             System.out.println("searching by query "+createSearchQuery(word, category));
             System.out.println(createSearchQuery(word));
         }
-        return createResults(resultList, word);
+        return createResults(resultList, word, lazy);
     }
 
-    private List<AbstractSearchResult> createResults(List<String> resultList, SearchedWord word) throws IOException {
+    private List<AbstractSearchResult> createResults(List<String> resultList, SearchedWord word, boolean lazy) throws IOException {
         List<AbstractSearchResult> resultObjects = new ArrayList<AbstractSearchResult>();
         for (String result : resultList) {
-            resultObjects.add(SearchResultFactory.createSearchResult(result, word, seekingLocation));
+            resultObjects.add(SearchResultFactory.createSearchResult(result, word, seekingLocation, lazy));
         }
         return resultObjects;
     }
 
-    public List<AbstractSearchResult> searchForWord(SearchedWord word, int results) throws IOException {
+    public List<AbstractSearchResult> searchForWord(SearchedWord word, int results, boolean lazy) throws IOException {
         if (printDebugInfo) {
             System.out.println("Searching for word " + word + ", will read first " + results + " results.");
         }
@@ -65,7 +65,7 @@ public abstract class VodafoneAbstractSeeker {
         if (printDebugInfo) {
             System.out.println(createSearchQuery(word));
         }
-        return createResults(resultList, word);
+        return createResults(resultList, word, lazy);
     }
 
     public List<String> getResults(String searchQuery, int results) throws IOException {
