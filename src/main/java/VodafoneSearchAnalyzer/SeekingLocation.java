@@ -1,11 +1,13 @@
 package VodafoneSearchAnalyzer;
 
+import com.sun.javaws.exceptions.InvalidArgumentException;
+
 /**
  * Created by Azathoth on 21. 1. 2015.
  */
 public enum SeekingLocation {
 
-    PUBLIC_WEB("Public web:");
+    PUBLIC_WEB("Public web");
 
     private String reportName;
 
@@ -15,6 +17,16 @@ public enum SeekingLocation {
 
     public String getReportName() {
         return reportName;
+    }
+
+    public static SeekingLocation createFromReportName(String reportName) throws InvalidArgumentException {
+        for (SeekingLocation seekingLocation : SeekingLocation.values()) {
+            if (seekingLocation.getReportName().equals(reportName)) {
+                return seekingLocation;
+            }
+        }
+        String[] arguments = {"Not known report name for seeking location: "+reportName};
+        throw new InvalidArgumentException(arguments);
     }
 
 }

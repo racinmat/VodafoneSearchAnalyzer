@@ -1,9 +1,11 @@
 package VodafoneSearchAnalyzer;
 
+import VodafoneSearchAnalyzer.SearchedWord.SearchedWord;
 import VodafoneSearchAnalyzer.Seekers.VodafoneAbstractSeeker;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -35,12 +37,12 @@ public class OverAllSeeker {
         return resultWebsites;
     }
 
-    public List<AbstractSearchResult> searchForWords(List<String> words) throws IOException {
+    public List<AbstractSearchResult> searchForWords(Collection<SearchedWord> words) throws IOException {
         List<AbstractSearchResult> resultWebsites = new ArrayList<AbstractSearchResult>();
-        for (String word : words)
+        for (SearchedWord word : words)
             for (VodafoneAbstractSeeker seeker : seekers) {
                 System.out.println("Seeking word "+word+" by seeker "+seeker.getClass()+".");
-                List<AbstractSearchResult> resultsForOneWord = seeker.searchForWord(word, seeker.getResults());
+                List<AbstractSearchResult> resultsForOneWord = seeker.searchForWord(word.getWord(), seeker.getResults());
                 resultWebsites.addAll(resultsForOneWord);
             }
         return resultWebsites;

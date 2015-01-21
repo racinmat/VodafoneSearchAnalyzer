@@ -37,18 +37,31 @@ public abstract class VodafoneAbstractSeeker {
 
     public List<AbstractSearchResult> searchForWord(String word, int results, Category category) throws IOException {
         System.out.println("Searching for word "+word+", will read first "+results+" results.");
-        List<String> resultList = getResults(prefix+word+suffix, results, category);
-        System.out.println("searching by query "+prefix+word+suffix);
+        List<String> resultList = getResults(createSearchQuery(word, category), results);
+        System.out.println("searching by query "+createSearchQuery(word, category));
+        System.out.println(createSearchQuery(word));
+        return createResults(resultList, word);
+    }
+
+    private List<AbstractSearchResult> createResults(List<String> resultList, String word) throws IOException {
         List<AbstractSearchResult> resultObjects = new ArrayList<AbstractSearchResult>();
         for (String result : resultList) {
-            resultObjects.add(SearchResultFactory.createSearchResult(result, word, category));
+            resultObjects.add(SearchResultFactory.createSearchResult(result, word, seekingLocation));
         }
         return resultObjects;
     }
 
-    public List<String> getResults(String searchQuery, int results, Category category) throws IOException {
+    public List<AbstractSearchResult> searchForWord(String word, int results) throws IOException {
+        System.out.println("Searching for word "+word+", will read first "+results+" results.");
+        List<String> resultList = getResults(createSearchQuery(word), results);
+        System.out.println(createSearchQuery(word));
+        return createResults(resultList, word);
+    }
+
+    public List<String> getResults(String searchQuery, int results) throws IOException {
         List<String> resultList = new ArrayList<String>();
         Connection connection = Jsoup.connect(searchQuery);
+        connection.timeout(1800000);
         Document document = connection.get();
         Elements links = document.select("div.searchResultItem.noImage>h3>a");
         results = Math.min(links.size(), results);              //checks if number of results is greater or smaller than number of required results
@@ -75,5 +88,5 @@ public abstract class VodafoneAbstractSeeker {
 
     abstract public String createSearchQuery(String word, Category category);
 
-    abstract public String createSearchResult(String word);
+    abstract public String createSearchQuery(String word);
 }

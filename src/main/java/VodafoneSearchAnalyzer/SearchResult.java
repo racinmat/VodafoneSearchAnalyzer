@@ -8,8 +8,8 @@ public class SearchResult extends AbstractSearchResult {
     private String metaKeywords;
     private String metaDescription;
 
-    public SearchResult(String url, String word, Category category, String metaKeywords, String metaDescription) {
-        super(url, word, category);
+    public SearchResult(String url, String word, SeekingLocation location, String metaKeywords, String metaDescription) {
+        super(url, word, location);
         this.metaKeywords = metaKeywords;
         this.metaDescription = metaDescription;
     }

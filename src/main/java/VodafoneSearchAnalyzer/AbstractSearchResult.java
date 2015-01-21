@@ -7,12 +7,12 @@ public class AbstractSearchResult {
 
     protected String url;
     protected String searchedWord;
-    protected Category category;
+    protected SeekingLocation location;
 
-    public AbstractSearchResult(String url, String searchedWord, Category category) {
+    public AbstractSearchResult(String url, String searchedWord, SeekingLocation location) {
         this.url = url;
         this.searchedWord = searchedWord;
-        this.category = category;
+        this.location = location;
     }
 
     @Override
@@ -20,7 +20,7 @@ public class AbstractSearchResult {
         return "VodafoneSearchAnalyzer.AbstractSearchResult{" +
                 "url='" + url + '\'' +
                 ", searchedWord='" + searchedWord + '\'' +
-                ", seekingLocation=" + category +
+                ", seekingLocation=" + location +
                 '}';
     }
 }

@@ -8,7 +8,7 @@ import VodafoneSearchAnalyzer.SeekingLocation;
  */
 public class PublicWebSeeker extends VodafoneAbstractSeeker {
 
-    public PublicWebSeeker(int results) {//c=here belongs category number
+    public PublicWebSeeker(int results) {//c=here belongs location number
         super("https://www.vodafone.cz/vyhledavani/?q=", "&l=cs&c=&sc=", SeekingLocation.PUBLIC_WEB, results);
     }
 
@@ -22,7 +22,7 @@ public class PublicWebSeeker extends VodafoneAbstractSeeker {
     }
 
     @Override
-    public String createSearchResult(String word) {
+    public String createSearchQuery(String word) {
         return prefix+word+suffix;
     }
 

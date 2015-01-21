@@ -1,5 +1,7 @@
 package VodafoneSearchAnalyzer;
 
+import com.sun.javaws.exceptions.InvalidArgumentException;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,8 +10,8 @@ import java.util.Map;
  */
 public enum Category {
 
-    CARE_CENTER("centrum péče", "Care Center", 2),
-    OFFER("nabídka", "Public web", 16),
+    CARE_CENTER("centrum péče", "Centrum pece", 2),
+    OFFER("nabídka", "Nabidka", 16),
     SELF_SERVICE("samoobsluha", "WSC", 17),
     WORLD_MANUALS("nastavení", "WorldManuals", 3),
     OVER_ALL("vše", "", 0);
@@ -34,6 +36,16 @@ public enum Category {
 
     public int getPublicWebParameter() {
         return publicWebParameter;
+    }
+
+    public static Category createFromReportName(String reportName) throws InvalidArgumentException {
+        for (Category category : Category.values()) {
+            if (category.getReportName().equals(reportName)) {
+                return category;
+            }
+        }
+        String[] arguments = {"Not known report name for category: "+reportName};
+        throw new InvalidArgumentException(arguments);
     }
 
 }

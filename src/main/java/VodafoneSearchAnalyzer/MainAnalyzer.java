@@ -1,5 +1,11 @@
 package VodafoneSearchAnalyzer;
 
+import VodafoneSearchAnalyzer.ExcelOutput.WriteExcel;
+import VodafoneSearchAnalyzer.SearchedWord.SearchWordsProvider;
+import VodafoneSearchAnalyzer.SearchedWord.SearchedWord;
+import VodafoneSearchAnalyzer.Seekers.PublicWebSeeker;
+
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -23,15 +29,19 @@ import java.util.List;
 public class MainAnalyzer {
 
     public static void main(String[] args) throws Exception {
-        List<String> wordsToBeSearched = SearchWordsProvider.getWordsToBeSearched();
-//        VodafoneSearchAnalyzer.OverAllSeeker seeker = new VodafoneSearchAnalyzer.OverAllSeeker(new VodafoneSearchAnalyzer.Seekers.VodafoneSelfServiceSeeker(5), new VodafoneSearchAnalyzer.Seekers.VodafoneCareCenterSeeker(5), new VodafoneSearchAnalyzer.Seekers.VodafoneOfferSeeker(5), new VodafoneSearchAnalyzer.Seekers.VodafoneWorldManualsSeeker(5), new VodafoneSearchAnalyzer.Seekers.VodafoneOverAllSeeker(10));
+//        Collection<SearchedWord> wordsToBeSearched = SearchWordsProvider.getWordsToBeSearched();
+//        VodafoneSearchAnalyzer.OverAllSeeker seeker = new VodafoneSearchAnalyzer.OverAllSeeker(new PublicWebSeeker(10));
 //        List<VodafoneSearchAnalyzer.AbstractSearchResult> results = seeker.searchForWords(wordsToBeSearched);
-//        for (String word : wordsToBeSearched) {
-//            System.out.println(word);
+//        for (SearchedWord word : wordsToBeSearched) {
+//            System.out.println(word.toString());
 //        }
 //        for (VodafoneSearchAnalyzer.AbstractSearchResult result : results) {
 //            System.out.println(result.toString());
 //        }
+        WriteExcel test = new WriteExcel();
+        test.setOutputFile("Output.xls");
+        test.write();
+        System.out.println("Please check the result file under Output.xls ");
     }
 
 }

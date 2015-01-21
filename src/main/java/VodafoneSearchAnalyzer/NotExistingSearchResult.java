@@ -7,8 +7,8 @@ public class NotExistingSearchResult extends AbstractSearchResult {
 
     private String errorMessage;
 
-    public NotExistingSearchResult(String url, String word, Category category) {
-        super(url, word, category);
+    public NotExistingSearchResult(String url, String word, SeekingLocation location) {
+        super(url, word, location);
         this.errorMessage = "404 error, stránka neexistuje.";
     }
 

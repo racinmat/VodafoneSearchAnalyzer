@@ -8,18 +8,20 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 
 /**
  * Created by Azathoth on 20. 1. 2015.
  */
 public class SearchResultFactory {
 
-    public static AbstractSearchResult createSearchResult(String url, String word, Category category) throws IOException {
+    public static AbstractSearchResult createSearchResult(String url, String word, SeekingLocation location) throws IOException {
         System.out.println("creating results for "+url);
         Connection connection = Jsoup.connect(url);
         String descriptionString = "";
         String keywordsString = "";
         try {
+            connection.timeout(1800000);
             Document document = connection.get();
             Elements descriptionArray = document.select("meta[name=\"description\"]");
             Element description = descriptionArray.first();
@@ -35,9 +37,13 @@ public class SearchResultFactory {
             } else {
                 keywordsString = keywords.attr("content");
             }
-            return new SearchResult(url, word, category, keywordsString, descriptionString);
+            return new SearchResult(url, word, location, keywordsString, descriptionString);
         } catch (HttpStatusException e) {
-            return new NotExistingSearchResult(url, word, category);
+            return new NotExistingSearchResult(url, word, location);
+        } catch (SocketTimeoutException e) {
+            e.printStackTrace();
+            System.out.println("Could not connect to website with url: "+url);
+            return null;
         }
     }
 
