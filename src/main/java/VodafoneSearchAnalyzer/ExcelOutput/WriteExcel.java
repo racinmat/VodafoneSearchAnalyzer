@@ -70,10 +70,10 @@ public class WriteExcel {
         // Write a few headers
         addCaption(sheet, 0, 0, "Sekce");
         addCaption(sheet, 1, 0, "Hledaný výraz");
-        addCaption(sheet, 2, 0, "Hledaný výraz");
-        addCaption(sheet, 3, 0, "Hledaný výraz");
-
-
+        addCaption(sheet, 2, 0, "Počet vyhledávání");
+        addCaption(sheet, 3, 0, "Url výsledku");
+        addCaption(sheet, 4, 0, "Meta tagy");
+        //column, row
     }
 
     private void createContent(WritableSheet sheet) throws WriteException, RowsExceededException {
