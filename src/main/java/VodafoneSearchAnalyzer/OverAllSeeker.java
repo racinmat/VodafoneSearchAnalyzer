@@ -1,3 +1,7 @@
+package VodafoneSearchAnalyzer;
+
+import VodafoneSearchAnalyzer.Seekers.VodafoneAbstractSeeker;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;

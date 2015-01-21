@@ -1,3 +1,5 @@
+package VodafoneSearchAnalyzer;
+
 import org.jsoup.Connection;
 import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
@@ -12,7 +14,7 @@ import java.io.IOException;
  */
 public class SearchResultFactory {
 
-    public static AbstractSearchResult createSearchResult(String url, String word, String category) throws IOException {
+    public static AbstractSearchResult createSearchResult(String url, String word, Category category) throws IOException {
         System.out.println("creating results for "+url);
         Connection connection = Jsoup.connect(url);
         String descriptionString = "";

@@ -1,3 +1,5 @@
+package VodafoneSearchAnalyzer;
+
 /**
  * Created by Azathoth on 20. 1. 2015.
  */
@@ -5,9 +7,9 @@ public class AbstractSearchResult {
 
     protected String url;
     protected String searchedWord;
-    protected String category;
+    protected Category category;
 
-    public AbstractSearchResult(String url, String searchedWord, String category) {
+    public AbstractSearchResult(String url, String searchedWord, Category category) {
         this.url = url;
         this.searchedWord = searchedWord;
         this.category = category;
@@ -15,11 +17,10 @@ public class AbstractSearchResult {
 
     @Override
     public String toString() {
-        return "AbstractSearchResult{" +
+        return "VodafoneSearchAnalyzer.AbstractSearchResult{" +
                 "url='" + url + '\'' +
                 ", searchedWord='" + searchedWord + '\'' +
-                ", category='" + category + '\'' +
+                ", seekingLocation=" + category +
                 '}';
     }
-
 }

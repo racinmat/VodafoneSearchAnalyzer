@@ -1,3 +1,5 @@
+package VodafoneSearchAnalyzer;
+
 import java.util.List;
 
 /**
@@ -22,14 +24,14 @@ public class MainAnalyzer {
 
     public static void main(String[] args) throws Exception {
         List<String> wordsToBeSearched = SearchWordsProvider.getWordsToBeSearched();
-        OverAllSeeker seeker = new OverAllSeeker(new VodafoneSelfServiceSeeker(5), new VodafoneCareCenterSeeker(5), new VodafoneOfferSeeker(5), new VodafoneWorldManualsSeeker(5), new VodafoneOverAllSeeker(10));
-        List<AbstractSearchResult> results = seeker.searchForWords(wordsToBeSearched);
-        for (String word : wordsToBeSearched) {
-            System.out.println(word);
-        }
-        for (AbstractSearchResult result : results) {
-            System.out.println(result.toString());
-        }
+//        VodafoneSearchAnalyzer.OverAllSeeker seeker = new VodafoneSearchAnalyzer.OverAllSeeker(new VodafoneSearchAnalyzer.Seekers.VodafoneSelfServiceSeeker(5), new VodafoneSearchAnalyzer.Seekers.VodafoneCareCenterSeeker(5), new VodafoneSearchAnalyzer.Seekers.VodafoneOfferSeeker(5), new VodafoneSearchAnalyzer.Seekers.VodafoneWorldManualsSeeker(5), new VodafoneSearchAnalyzer.Seekers.VodafoneOverAllSeeker(10));
+//        List<VodafoneSearchAnalyzer.AbstractSearchResult> results = seeker.searchForWords(wordsToBeSearched);
+//        for (String word : wordsToBeSearched) {
+//            System.out.println(word);
+//        }
+//        for (VodafoneSearchAnalyzer.AbstractSearchResult result : results) {
+//            System.out.println(result.toString());
+//        }
     }
 
 }

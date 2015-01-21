@@ -1,3 +1,5 @@
+package VodafoneSearchAnalyzer;
+
 import java.util.Map;
 
 /**
