@@ -9,6 +9,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import javax.net.ssl.SSLHandshakeException;
 import java.io.IOException;
 import java.net.SocketTimeoutException;
 
@@ -49,7 +50,7 @@ public class SearchResultFactory {
                 return new SearchResult(url, word, location, keywordsString, descriptionString);
             } catch (HttpStatusException e) {
                 return new NotExistingSearchResult(url, word, location);
-            } catch (SocketTimeoutException e) {
+            } catch (SocketTimeoutException|SSLHandshakeException e) {
                 e.printStackTrace();
                 System.out.println("Could not connect to website with url: "+url);
                 return null;

@@ -7,12 +7,10 @@ import java.util.List;
 import java.util.Locale;
 
 import VodafoneSearchAnalyzer.SearchResult.AbstractSearchResult;
-import VodafoneSearchAnalyzer.SearchResult.SearchResult;
 import jxl.CellView;
 import jxl.Workbook;
 import jxl.WorkbookSettings;
 import jxl.format.UnderlineStyle;
-import jxl.write.Formula;
 import jxl.write.Label;
 import jxl.write.Number;
 import jxl.write.WritableCellFormat;
@@ -80,7 +78,7 @@ public class WriteExcel {
         //column, row
     }
 
-    private void createContent(WritableSheet sheet, List<AbstractSearchResult> results) throws WriteException, RowsExceededException {
+    private void createContent(WritableSheet sheet, List<AbstractSearchResult> results) throws WriteException {
         sortResults(results);
         boolean sameWordSearched = false;
         boolean sameSection = false;
@@ -108,22 +106,20 @@ public class WriteExcel {
 
     }
 
-    private void addCaption(WritableSheet sheet, int column, int row, String s) throws RowsExceededException, WriteException {
+    private void addCaption(WritableSheet sheet, int column, int row, String s) throws WriteException {
         Label label;
         label = new Label(column, row, s, timesBoldUnderline);
         sheet.addCell(label);
     }
 
-    private void addNumber(WritableSheet sheet, int column, int row, Integer integer) throws WriteException, RowsExceededException {
+    private void addNumber(WritableSheet sheet, int column, int row, Integer integer) throws WriteException {
         Number number;
         number = new Number(column, row, integer, times);
         sheet.addCell(number);
     }
 
-    private void addLabel(WritableSheet sheet, int column, int row, String s)
-            throws WriteException, RowsExceededException {
-        Label label;
-        label = new Label(column, row, s, times);
+    private void addLabel(WritableSheet sheet, int column, int row, String s) throws WriteException {
+        Label label = new Label(column, row, s, times);
         sheet.addCell(label);
     }
 

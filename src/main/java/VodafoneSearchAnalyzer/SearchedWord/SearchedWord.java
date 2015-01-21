@@ -3,10 +3,12 @@ package VodafoneSearchAnalyzer.SearchedWord;
 import VodafoneSearchAnalyzer.Category;
 import VodafoneSearchAnalyzer.SeekingLocation;
 
+import java.io.Serializable;
+
 /**
  * Created by Azathoth on 21. 1. 2015.
  */
-public class SearchedWord implements Comparable<SearchedWord> {
+public class SearchedWord implements Comparable<SearchedWord>, Serializable {
 
     private String word;
     private int countOfSearching;

@@ -3,18 +3,14 @@ package VodafoneSearchAnalyzer.SearchResult;
 import VodafoneSearchAnalyzer.SearchedWord.SearchedWord;
 import VodafoneSearchAnalyzer.SeekingLocation;
 
+import java.io.Serializable;
+
 /**
  * Created by Azathoth on 21. 1. 2015.
  */
-public class PdfSearchResult extends NotLazySearchResult {
+abstract public class NotLazySearchResult extends AbstractSearchResult implements Serializable {
 
-    public PdfSearchResult(String url, SearchedWord searchedWord, SeekingLocation location) {
+    public NotLazySearchResult(String url, SearchedWord searchedWord, SeekingLocation location) {
         super(url, searchedWord, location);
     }
-
-    @Override
-    public String getMetatagsForOutput() {
-        return "Toto je pdf.";
-    }
-
 }

@@ -6,7 +6,7 @@ import VodafoneSearchAnalyzer.SeekingLocation;
 /**
  * Created by Azathoth on 20. 1. 2015.
  */
-public class NotExistingSearchResult extends AbstractSearchResult {
+public class NotExistingSearchResult extends NotLazySearchResult {
 
     private String errorMessage;
 

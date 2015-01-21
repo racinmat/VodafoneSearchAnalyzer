@@ -7,6 +7,7 @@ import VodafoneSearchAnalyzer.SearchedWord.SearchWordsProvider;
 import VodafoneSearchAnalyzer.SearchedWord.SearchedWord;
 import VodafoneSearchAnalyzer.Seekers.PublicWebSeeker;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -31,17 +32,20 @@ public class MainAnalyzer {
 
     public static void main(String[] args) throws Exception {
         List<SearchedWord> wordsToBeSearched = SearchWordsProvider.getWordsToBeSearched();
-        VodafoneSearchAnalyzer.OverAllSeeker seeker = new VodafoneSearchAnalyzer.OverAllSeeker(new PublicWebSeeker(10));
-        List<AbstractSearchResult> results = seeker.searchForWords(wordsToBeSearched);
-        for (SearchedWord word : wordsToBeSearched) {
-            System.out.println(word.toString());
-        }
-        for (AbstractSearchResult result : results) {
-            System.out.println(result.toString());
-        }
-        SearchResultsPersister persister = new SearchResultsPersister();
-        persister.persistSearchResults(results);
-        System.out.println("Everything is done.");
+        FileSerializer.serialize(wordsToBeSearched);
+
+//        List<SearchedWord> wordsToBeSearched = FileSerializer.deserializeSearchedWords();
+//        VodafoneSearchAnalyzer.OverAllSeeker seeker = new VodafoneSearchAnalyzer.OverAllSeeker(new PublicWebSeeker(10));
+//        List<AbstractSearchResult> results = seeker.searchForWords(wordsToBeSearched);
+//        for (SearchedWord word : wordsToBeSearched) {
+//            System.out.println(word.toString());
+//        }
+//        for (AbstractSearchResult result : results) {
+//            System.out.println(result.toString());
+//        }
+//        SearchResultsPersister persister = new SearchResultsPersister();
+//        persister.persistSearchResults(results);
+//        System.out.println("Everything is done.");
     }
 
 }

@@ -6,7 +6,7 @@ import VodafoneSearchAnalyzer.SeekingLocation;
 /**
  * Created by Azathoth on 20. 1. 2015.
  */
-public class SearchResult extends AbstractSearchResult {
+public class SearchResult extends NotLazySearchResult {
 
     private String metaKeywords;
     private String metaDescription;
