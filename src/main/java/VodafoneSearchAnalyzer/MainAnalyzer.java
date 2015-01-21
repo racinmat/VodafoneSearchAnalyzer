@@ -1,11 +1,12 @@
 package VodafoneSearchAnalyzer;
 
-import VodafoneSearchAnalyzer.ExcelOutput.WriteExcel;
+import VodafoneSearchAnalyzer.SearchResult.ExcelOutput.WriteExcel;
+import VodafoneSearchAnalyzer.SearchResult.AbstractSearchResult;
+import VodafoneSearchAnalyzer.SearchResult.SearchResultsPersister;
 import VodafoneSearchAnalyzer.SearchedWord.SearchWordsProvider;
 import VodafoneSearchAnalyzer.SearchedWord.SearchedWord;
 import VodafoneSearchAnalyzer.Seekers.PublicWebSeeker;
 
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -35,13 +36,12 @@ public class MainAnalyzer {
         for (SearchedWord word : wordsToBeSearched) {
             System.out.println(word.toString());
         }
-        for (VodafoneSearchAnalyzer.AbstractSearchResult result : results) {
+        for (AbstractSearchResult result : results) {
             System.out.println(result.toString());
         }
-        WriteExcel test = new WriteExcel();
-        test.setOutputFile("Output.xls");
-        test.write(results);
-        System.out.println("Please check the result file under Output.xls ");
+        SearchResultsPersister persister = new SearchResultsPersister();
+        persister.persistSearchResults(results);
+        System.out.println("Everything is done.");
     }
 
 }

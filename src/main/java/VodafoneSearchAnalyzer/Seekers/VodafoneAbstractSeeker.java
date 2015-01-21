@@ -1,7 +1,7 @@
 package VodafoneSearchAnalyzer.Seekers;
 
-import VodafoneSearchAnalyzer.AbstractSearchResult;
-import VodafoneSearchAnalyzer.SearchResultFactory;
+import VodafoneSearchAnalyzer.SearchResult.AbstractSearchResult;
+import VodafoneSearchAnalyzer.SearchResult.SearchResultFactory;
 import VodafoneSearchAnalyzer.SearchedWord.SearchedWord;
 import VodafoneSearchAnalyzer.SeekingLocation;
 import org.jsoup.Connection;
@@ -26,7 +26,7 @@ public abstract class VodafoneAbstractSeeker {
     protected int results;
     private boolean printDebugInfo = false;
 
-//    public abstract List<VodafoneSearchAnalyzer.SearchResult> searchForWord(String word, int results) throws IOException;
+//    public abstract List<VodafoneSearchAnalyzer.SearchResult.SearchResult> searchForWord(String word, int results) throws IOException;
 
     public VodafoneAbstractSeeker(String prefix, String suffix, SeekingLocation seekingLocation, int results) {
         this.prefix = prefix;
@@ -71,7 +71,7 @@ public abstract class VodafoneAbstractSeeker {
     public List<String> getResults(String searchQuery, int results) throws IOException {
         List<String> resultList = new ArrayList<String>();
         Connection connection = Jsoup.connect(searchQuery);
-        connection.timeout(1800000);
+        connection.timeout(3600000);
         Document document = connection.get();
         Elements links = document.select("div.searchResultItem.noImage>h3>a");
         results = Math.min(links.size(), results);              //checks if number of results is greater or smaller than number of required results

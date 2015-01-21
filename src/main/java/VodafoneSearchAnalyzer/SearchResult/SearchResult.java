@@ -1,6 +1,7 @@
-package VodafoneSearchAnalyzer;
+package VodafoneSearchAnalyzer.SearchResult;
 
 import VodafoneSearchAnalyzer.SearchedWord.SearchedWord;
+import VodafoneSearchAnalyzer.SeekingLocation;
 
 /**
  * Created by Azathoth on 20. 1. 2015.
@@ -30,7 +31,7 @@ public class SearchResult extends AbstractSearchResult {
 
     @Override
     public String toString() {
-        return "VodafoneSearchAnalyzer.SearchResult{" +
+        return "VodafoneSearchAnalyzer.SearchResult.SearchResult{" +
                 "metaKeywords='" + metaKeywords + '\'' +
                 ", metaDescription='" + metaDescription + '\'' +
                 "} " + super.toString();

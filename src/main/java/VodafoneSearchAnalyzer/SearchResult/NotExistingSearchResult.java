@@ -1,6 +1,7 @@
-package VodafoneSearchAnalyzer;
+package VodafoneSearchAnalyzer.SearchResult;
 
 import VodafoneSearchAnalyzer.SearchedWord.SearchedWord;
+import VodafoneSearchAnalyzer.SeekingLocation;
 
 /**
  * Created by Azathoth on 20. 1. 2015.
@@ -16,7 +17,7 @@ public class NotExistingSearchResult extends AbstractSearchResult {
 
     @Override
     public String toString() {
-        return "VodafoneSearchAnalyzer.NotExistingSearchResult{" +
+        return "VodafoneSearchAnalyzer.SearchResult.NotExistingSearchResult{" +
                 "errorMessage='" + errorMessage + '\'' +
                 "} " + super.toString();
     }

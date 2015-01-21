@@ -1,4 +1,4 @@
-package VodafoneSearchAnalyzer;
+package VodafoneSearchAnalyzer.SearchResult;
 
 import java.util.Map;
 

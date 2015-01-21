@@ -1,6 +1,7 @@
-package VodafoneSearchAnalyzer;
+package VodafoneSearchAnalyzer.SearchResult;
 
 import VodafoneSearchAnalyzer.SearchedWord.SearchedWord;
+import VodafoneSearchAnalyzer.SeekingLocation;
 
 /**
  * Created by Azathoth on 20. 1. 2015.
@@ -31,7 +32,7 @@ abstract public class AbstractSearchResult implements Comparable<AbstractSearchR
 
     @Override
     public String toString() {
-        return "VodafoneSearchAnalyzer.AbstractSearchResult{" +
+        return "VodafoneSearchAnalyzer.SearchResult.AbstractSearchResult{" +
                 "url='" + url + '\'' +
                 ", searchedWord='" + searchedWord + '\'' +
                 ", seekingLocation=" + location +

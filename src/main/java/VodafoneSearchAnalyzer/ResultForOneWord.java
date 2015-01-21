@@ -1,5 +1,7 @@
 package VodafoneSearchAnalyzer;
 
+import VodafoneSearchAnalyzer.SearchResult.SearchResult;
+
 import java.util.List;
 
 /**

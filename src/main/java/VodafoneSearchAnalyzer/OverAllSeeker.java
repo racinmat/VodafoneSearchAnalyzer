@@ -1,11 +1,11 @@
 package VodafoneSearchAnalyzer;
 
+import VodafoneSearchAnalyzer.SearchResult.AbstractSearchResult;
 import VodafoneSearchAnalyzer.SearchedWord.SearchedWord;
 import VodafoneSearchAnalyzer.Seekers.VodafoneAbstractSeeker;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
