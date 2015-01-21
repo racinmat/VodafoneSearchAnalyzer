@@ -26,9 +26,9 @@ public class OverAllSeeker {
         }
     }
 
-    public List<AbstractSearchResult> searchForWords(List<String> words, int results) throws IOException {
+    public List<AbstractSearchResult> searchForWords(List<SearchedWord> words, int results) throws IOException {
         List<AbstractSearchResult> resultWebsites = new ArrayList<AbstractSearchResult>();
-        for (String word : words)
+        for (SearchedWord word : words)
             for (VodafoneAbstractSeeker seeker : seekers) {
                 System.out.println("Seeking word "+word+" by seeker "+seeker.getClass()+".");
                 List<AbstractSearchResult> resultsForOneWord = seeker.searchForWord(word, results);
@@ -37,14 +37,18 @@ public class OverAllSeeker {
         return resultWebsites;
     }
 
-    public List<AbstractSearchResult> searchForWords(Collection<SearchedWord> words) throws IOException {
+    public List<AbstractSearchResult> searchForWords(List<SearchedWord> words) throws IOException {
         List<AbstractSearchResult> resultWebsites = new ArrayList<AbstractSearchResult>();
-        for (SearchedWord word : words)
+        int remaining = words.size();
+        for (SearchedWord word : words) {
             for (VodafoneAbstractSeeker seeker : seekers) {
                 System.out.println("Seeking word "+word+" by seeker "+seeker.getClass()+".");
-                List<AbstractSearchResult> resultsForOneWord = seeker.searchForWord(word.getWord(), seeker.getResults());
+                List<AbstractSearchResult> resultsForOneWord = seeker.searchForWord(word, seeker.getResults());
                 resultWebsites.addAll(resultsForOneWord);
             }
+            remaining--;
+            System.out.println(remaining);
+        }
         return resultWebsites;
     }
 

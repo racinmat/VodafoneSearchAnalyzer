@@ -1,5 +1,6 @@
 package VodafoneSearchAnalyzer;
 
+import VodafoneSearchAnalyzer.SearchedWord.SearchedWord;
 import org.jsoup.Connection;
 import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
@@ -15,8 +16,12 @@ import java.net.SocketTimeoutException;
  */
 public class SearchResultFactory {
 
-    public static AbstractSearchResult createSearchResult(String url, String word, SeekingLocation location) throws IOException {
-        System.out.println("creating results for "+url);
+    private static boolean printDebugInfo = false;
+
+    public static AbstractSearchResult createSearchResult(String url, SearchedWord word, SeekingLocation location) throws IOException {
+        if (printDebugInfo) {
+            System.out.println("creating results for "+url);
+        }
         Connection connection = Jsoup.connect(url);
         String descriptionString = "";
         String keywordsString = "";

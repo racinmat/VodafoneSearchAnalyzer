@@ -21,8 +21,9 @@ public class SearchWordsProvider {
     private static String filename = "Report.csv";
     private static int limit = 10;
     private static boolean doNotUseFilters = true;
+    private static boolean printDebugInfo = false;
 
-    public static Collection<SearchedWord> getWordsToBeSearched() throws IOException {
+    public static List<SearchedWord> getWordsToBeSearched() throws IOException {
         File wordsFile = new File(filename);
         CSVParser wordsParsed = CSVParser.parse(wordsFile, Charset.defaultCharset(), CSVFormat.DEFAULT);
         List<CSVRecord> rows = wordsParsed.getRecords();
@@ -39,19 +40,27 @@ public class SearchWordsProvider {
                 words.add(SearchedWordFactory.create(row.get(1), Integer.parseInt(row.get(2)), row.get(0), doNotUseFilters));
             } catch (ParseException e) {
                 if(row.get(0).startsWith("Public")) {
-                    System.out.println(row.toString());
-                    System.out.println(e.toString());
+                    if (printDebugInfo) {
+                        System.out.println(row.toString());
+                        System.out.println(e.toString());
+                    }
                 }
             }
         }
-        System.out.println("searched words:");
-        System.out.println(words.size());
+        if (printDebugInfo) {
+            System.out.println("searched words:");
+            System.out.println(words.size());
+        }
         words = Collections2.filter(words, new IntegerGreaterThan<SearchedWord>(limit));
         System.out.println(words.size());
 //        for (SearchedWord word : words) {
 //            System.out.println(word.toString());
 //        }
-        return words;
+        List<SearchedWord> outputWords = new ArrayList<>();
+        for (SearchedWord word : words) {
+            outputWords.add(word);
+        }
+        return outputWords;
     }
 
 }

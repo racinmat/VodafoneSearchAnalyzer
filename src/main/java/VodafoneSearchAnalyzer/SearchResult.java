@@ -1,5 +1,7 @@
 package VodafoneSearchAnalyzer;
 
+import VodafoneSearchAnalyzer.SearchedWord.SearchedWord;
+
 /**
  * Created by Azathoth on 20. 1. 2015.
  */
@@ -8,7 +10,7 @@ public class SearchResult extends AbstractSearchResult {
     private String metaKeywords;
     private String metaDescription;
 
-    public SearchResult(String url, String word, SeekingLocation location, String metaKeywords, String metaDescription) {
+    public SearchResult(String url, SearchedWord word, SeekingLocation location, String metaKeywords, String metaDescription) {
         super(url, word, location);
         this.metaKeywords = metaKeywords;
         this.metaDescription = metaDescription;
@@ -32,6 +34,23 @@ public class SearchResult extends AbstractSearchResult {
                 "metaKeywords='" + metaKeywords + '\'' +
                 ", metaDescription='" + metaDescription + '\'' +
                 "} " + super.toString();
+    }
+
+    @Override
+    public String getMetatagsForOutput() {
+        String output = "";
+        if (metaKeywords.equals("Tag keywords ve stránce chybí.")) {
+            output += "Tag keywords ve stránce chybí.";
+        } else {
+            output += "<meta name=\"keywords\" content=\""+metaKeywords+"\" />";
+
+        }
+        if (metaDescription.equals("Tag description ve stránce chybí.")) {
+            output += "Tag description ve stránce chybí.";
+        } else {
+            output += "<meta name=\"description\" content=\""+metaDescription+"\" />";
+        }
+        return output;
     }
 
 }

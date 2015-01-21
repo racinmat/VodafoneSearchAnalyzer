@@ -1,6 +1,7 @@
 package VodafoneSearchAnalyzer.Seekers;
 
 import VodafoneSearchAnalyzer.Category;
+import VodafoneSearchAnalyzer.SearchedWord.SearchedWord;
 import VodafoneSearchAnalyzer.SeekingLocation;
 
 /**
@@ -17,13 +18,13 @@ public class PublicWebSeeker extends VodafoneAbstractSeeker {
     }
 
     @Override
-    public String createSearchQuery(String word, Category category) {
-        return prefix+word+suffix;//categories are not working yet
+    public String createSearchQuery(SearchedWord word, Category category) {
+        return prefix+word.getWord()+suffix;//categories are not working yet
     }
 
     @Override
-    public String createSearchQuery(String word) {
-        return prefix+word+suffix;
+    public String createSearchQuery(SearchedWord word) {
+        return prefix+word.getWord()+suffix;
     }
 
 

@@ -29,18 +29,18 @@ import java.util.List;
 public class MainAnalyzer {
 
     public static void main(String[] args) throws Exception {
-//        Collection<SearchedWord> wordsToBeSearched = SearchWordsProvider.getWordsToBeSearched();
-//        VodafoneSearchAnalyzer.OverAllSeeker seeker = new VodafoneSearchAnalyzer.OverAllSeeker(new PublicWebSeeker(10));
-//        List<VodafoneSearchAnalyzer.AbstractSearchResult> results = seeker.searchForWords(wordsToBeSearched);
-//        for (SearchedWord word : wordsToBeSearched) {
-//            System.out.println(word.toString());
-//        }
-//        for (VodafoneSearchAnalyzer.AbstractSearchResult result : results) {
-//            System.out.println(result.toString());
-//        }
+        List<SearchedWord> wordsToBeSearched = SearchWordsProvider.getWordsToBeSearched();
+        VodafoneSearchAnalyzer.OverAllSeeker seeker = new VodafoneSearchAnalyzer.OverAllSeeker(new PublicWebSeeker(10));
+        List<AbstractSearchResult> results = seeker.searchForWords(wordsToBeSearched);
+        for (SearchedWord word : wordsToBeSearched) {
+            System.out.println(word.toString());
+        }
+        for (VodafoneSearchAnalyzer.AbstractSearchResult result : results) {
+            System.out.println(result.toString());
+        }
         WriteExcel test = new WriteExcel();
         test.setOutputFile("Output.xls");
-        test.write();
+        test.write(results);
         System.out.println("Please check the result file under Output.xls ");
     }
 

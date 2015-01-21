@@ -2,6 +2,7 @@ package VodafoneSearchAnalyzer.Seekers;
 
 import VodafoneSearchAnalyzer.AbstractSearchResult;
 import VodafoneSearchAnalyzer.SearchResultFactory;
+import VodafoneSearchAnalyzer.SearchedWord.SearchedWord;
 import VodafoneSearchAnalyzer.SeekingLocation;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -23,6 +24,7 @@ public abstract class VodafoneAbstractSeeker {
     protected String suffix;
     protected SeekingLocation seekingLocation;
     protected int results;
+    private boolean printDebugInfo = false;
 
 //    public abstract List<VodafoneSearchAnalyzer.SearchResult> searchForWord(String word, int results) throws IOException;
 
@@ -35,15 +37,19 @@ public abstract class VodafoneAbstractSeeker {
 
 //    public abstract List<String> getResults(String searchQuery, int results) throws IOException;
 
-    public List<AbstractSearchResult> searchForWord(String word, int results, Category category) throws IOException {
-        System.out.println("Searching for word "+word+", will read first "+results+" results.");
+    public List<AbstractSearchResult> searchForWord(SearchedWord word, int results, Category category) throws IOException {
+        if (printDebugInfo) {
+            System.out.println("Searching for word " + word + ", will read first " + results + " results.");
+        }
         List<String> resultList = getResults(createSearchQuery(word, category), results);
-        System.out.println("searching by query "+createSearchQuery(word, category));
-        System.out.println(createSearchQuery(word));
+        if (printDebugInfo) {
+            System.out.println("searching by query "+createSearchQuery(word, category));
+            System.out.println(createSearchQuery(word));
+        }
         return createResults(resultList, word);
     }
 
-    private List<AbstractSearchResult> createResults(List<String> resultList, String word) throws IOException {
+    private List<AbstractSearchResult> createResults(List<String> resultList, SearchedWord word) throws IOException {
         List<AbstractSearchResult> resultObjects = new ArrayList<AbstractSearchResult>();
         for (String result : resultList) {
             resultObjects.add(SearchResultFactory.createSearchResult(result, word, seekingLocation));
@@ -51,10 +57,14 @@ public abstract class VodafoneAbstractSeeker {
         return resultObjects;
     }
 
-    public List<AbstractSearchResult> searchForWord(String word, int results) throws IOException {
-        System.out.println("Searching for word "+word+", will read first "+results+" results.");
+    public List<AbstractSearchResult> searchForWord(SearchedWord word, int results) throws IOException {
+        if (printDebugInfo) {
+            System.out.println("Searching for word " + word + ", will read first " + results + " results.");
+        }
         List<String> resultList = getResults(createSearchQuery(word), results);
-        System.out.println(createSearchQuery(word));
+        if (printDebugInfo) {
+            System.out.println(createSearchQuery(word));
+        }
         return createResults(resultList, word);
     }
 
@@ -86,7 +96,7 @@ public abstract class VodafoneAbstractSeeker {
         return results;
     }
 
-    abstract public String createSearchQuery(String word, Category category);
+    abstract public String createSearchQuery(SearchedWord word, Category category);
 
-    abstract public String createSearchQuery(String word);
+    abstract public String createSearchQuery(SearchedWord word);
 }
