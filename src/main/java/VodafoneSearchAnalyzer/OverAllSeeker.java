@@ -58,8 +58,12 @@ public class OverAllSeeker {
 
     public List<AbstractSearchResult> lazyLoadResults(List<LazySearchResult> lazyResults) throws IOException {
         List<AbstractSearchResult> results = new ArrayList<>();
+        int count = lazyResults.size();
         for (LazySearchResult lazyResult : lazyResults) {
             results.add(SearchResultFactory.createSearchResult(lazyResult));
+            count--;
+            System.out.println(count);
+
         }
         return results;
     }

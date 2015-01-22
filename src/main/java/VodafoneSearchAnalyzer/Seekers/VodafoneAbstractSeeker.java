@@ -24,7 +24,7 @@ public abstract class VodafoneAbstractSeeker {
     protected String suffix;
     protected SeekingLocation seekingLocation;
     protected int results;
-    private boolean printDebugInfo = true;
+    private boolean printDebugInfo = false;
 
 //    public abstract List<VodafoneSearchAnalyzer.SearchResult.SearchResult> searchForWord(String word, int results) throws IOException;
 

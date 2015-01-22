@@ -2,10 +2,12 @@ package VodafoneSearchAnalyzer;
 
 import com.sun.javaws.exceptions.InvalidArgumentException;
 
+import java.io.Serializable;
+
 /**
  * Created by Azathoth on 21. 1. 2015.
  */
-public enum SeekingLocation {
+public enum SeekingLocation implements Serializable {
 
     PUBLIC_WEB("Public web");
 

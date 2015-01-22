@@ -35,23 +35,20 @@ public class MainAnalyzer {
 //        List<SearchedWord> wordsToBeSearched = SearchWordsProvider.getWordsToBeSearched();
 //        FileSerializer.serialize(wordsToBeSearched);
 
-        List<SearchedWord> wordsToBeSearched = FileSerializer.deserializeSearchedWords();
-        System.out.println(wordsToBeSearched.size());
+//        List<SearchedWord> wordsToBeSearched = FileSerializer.deserializeSearchedWords();
+//        System.out.println(wordsToBeSearched.size());
         VodafoneSearchAnalyzer.OverAllSeeker seeker = new VodafoneSearchAnalyzer.OverAllSeeker(new PublicWebSeeker(10));
-        List<AbstractSearchResult> results = seeker.searchForWords(wordsToBeSearched, true);        //it is lazy
-        FileSerializer.serialize(results);
+//        List<AbstractSearchResult> results = seeker.searchForWords(wordsToBeSearched, true);        //it is lazy
+//        FileSerializer.serialize(results);
 
-//        List<LazySearchResult> results = FileSerializer.deserializeSearchResultsWithoutTags();
-//        List<AbstractSearchResult> loadedResults = seeker.lazyLoadResults(results);
+        List<LazySearchResult> results = FileSerializer.deserializeSearchResultsWithoutTags();
+        System.out.println("results size: "+results.size());
+        List<AbstractSearchResult> loadedResults = seeker.lazyLoadResults(results);
+        System.out.println("loaded results size: "+loadedResults.size());
+        FileSerializer.serialize(loadedResults);
 
-//        for (SearchedWord word : wordsToBeSearched) {
-//            System.out.println(word.toString());
-//        }
-//        for (AbstractSearchResult result : results) {
-//            System.out.println(result.toString());
-//        }
 //        SearchResultsPersister persister = new SearchResultsPersister();
-//        persister.persistSearchResults(results);
+//        persister.persistSearchResults(loadedResults);
         System.out.println("Everything is done.");
     }
 

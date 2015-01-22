@@ -3,10 +3,12 @@ package VodafoneSearchAnalyzer.SearchResult;
 import VodafoneSearchAnalyzer.SearchedWord.SearchedWord;
 import VodafoneSearchAnalyzer.SeekingLocation;
 
+import java.io.Serializable;
+
 /**
  * Created by Azathoth on 20. 1. 2015.
  */
-abstract public class AbstractSearchResult implements Comparable<AbstractSearchResult> {
+abstract public class AbstractSearchResult implements Comparable<AbstractSearchResult>, Serializable {
 
     protected String url;
     protected SearchedWord searchedWord;

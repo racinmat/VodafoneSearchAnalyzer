@@ -18,7 +18,7 @@ import java.net.SocketTimeoutException;
  */
 public class SearchResultFactory {
 
-    private static boolean printDebugInfo = true;
+    private static boolean printDebugInfo = false;
 
     public static AbstractSearchResult createSearchResult(String url, SearchedWord word, SeekingLocation location, boolean lazy) throws IOException {
         if (lazy) {

@@ -2,13 +2,14 @@ package VodafoneSearchAnalyzer;
 
 import com.sun.javaws.exceptions.InvalidArgumentException;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Created by Azathoth on 21. 1. 2015.
  */
-public enum Category {
+public enum Category implements Serializable {
 
     CARE_CENTER("centrum péče", "Centrum pece", 2),
     OFFER("nabídka", "Nabidka", 16),
