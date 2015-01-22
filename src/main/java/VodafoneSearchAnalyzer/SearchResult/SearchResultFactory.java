@@ -29,6 +29,8 @@ public class SearchResultFactory {
         }
         if (url.endsWith(".pdf")) {
             return new PdfSearchResult(url, word, location);
+        } else if (url.startsWith("https")) {
+            return new HttpsSearchResult(url, word, location);
         } else {
             Connection connection = Jsoup.connect(url);
             String descriptionString = "";

@@ -1,14 +1,16 @@
 package VodafoneSearchAnalyzer;
 
+import VodafoneSearchAnalyzer.SearchResult.*;
 import VodafoneSearchAnalyzer.SearchResult.ExcelOutput.WriteExcel;
-import VodafoneSearchAnalyzer.SearchResult.AbstractSearchResult;
-import VodafoneSearchAnalyzer.SearchResult.LazySearchResult;
-import VodafoneSearchAnalyzer.SearchResult.SearchResultsPersister;
 import VodafoneSearchAnalyzer.SearchedWord.SearchWordsProvider;
 import VodafoneSearchAnalyzer.SearchedWord.SearchedWord;
 import VodafoneSearchAnalyzer.Seekers.PublicWebSeeker;
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,19 +39,39 @@ public class MainAnalyzer {
 
 //        List<SearchedWord> wordsToBeSearched = FileSerializer.deserializeSearchedWords();
 //        System.out.println(wordsToBeSearched.size());
-        VodafoneSearchAnalyzer.OverAllSeeker seeker = new VodafoneSearchAnalyzer.OverAllSeeker(new PublicWebSeeker(10));
+//        VodafoneSearchAnalyzer.OverAllSeeker seeker = new VodafoneSearchAnalyzer.OverAllSeeker(new PublicWebSeeker(10));
 //        List<AbstractSearchResult> results = seeker.searchForWords(wordsToBeSearched, true);        //it is lazy
 //        FileSerializer.serialize(results);
 
-        List<LazySearchResult> results = FileSerializer.deserializeSearchResultsWithoutTags();
-        System.out.println("results size: "+results.size());
-        List<AbstractSearchResult> loadedResults = seeker.lazyLoadResults(results);
-        System.out.println("loaded results size: "+loadedResults.size());
-        FileSerializer.serialize(loadedResults);
+//        List<LazySearchResult> results = FileSerializer.deserializeSearchResultsWithoutTags();
+//        System.out.println("results size: "+results.size());
+//        List<AbstractSearchResult> loadedResults = seeker.lazyLoadResults(results);
+//        System.out.println("loaded results size: "+loadedResults.size());
+//        FileSerializer.serialize(loadedResults);
 
 //        SearchResultsPersister persister = new SearchResultsPersister();
 //        persister.persistSearchResults(loadedResults);
-        System.out.println("Everything is done.");
+//        System.out.println("Everything is done.");
+
+//        Connection connection = Jsoup.connect("https://www.oskarta.cz/");
+//        Document page = connection.get();
+//        page.select("div[name=description]");
+
+//        AbstractSearchResult result = new HttpsSearchResult("te", new SearchedWord("fa", 5, Category.WORLD_MANUALS, SeekingLocation.PUBLIC_WEB), SeekingLocation.PUBLIC_WEB);
+//        System.out.println(result.getClass().equals(Serialized.SEARCH_RESULTS.getObjectClass()));
+//        List<AbstractSearchResult> list = new ArrayList<>();
+//        list.add(result);
+//        System.out.println(Serialized.createFromList(list).getObjectClass());
+
+        List<NotLazySearchResult> results = FileSerializer.deserializeSearchResults();
+        System.out.println(results.size());
+        int count = 0;
+        for (NotLazySearchResult result : results) {
+            if (result instanceof HttpsSearchResult) {
+                count++;
+            }
+        }
+        System.out.println(count);
     }
 
 }

@@ -13,4 +13,5 @@ abstract public class NotLazySearchResult extends AbstractSearchResult implement
     public NotLazySearchResult(String url, SearchedWord searchedWord, SeekingLocation location) {
         super(url, searchedWord, location);
     }
+
 }

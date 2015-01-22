@@ -36,11 +36,26 @@ public enum Serialized {
     public static Serialized createFromList(List list) throws InvalidArgumentException {
         Object element = list.get(0);
         for (Serialized serialized : Serialized.values()) {
-            if (serialized.getObjectClass().equals(element.getClass())) {
+            if (isChildOfParentOrSame(serialized.getObjectClass(), element.getClass())) {
                 return serialized;
             }
         }
-        String[] output = {"not known class", list.toString()};
+        String[] output = {"not known class", element.getClass().toString(), element.toString()};
         throw new InvalidArgumentException(output);
+    }
+
+    private static boolean isChildOfParentOrSame(Class parent, Class<? extends Object> child) {
+        if (parent.equals(child)) {
+            return true;
+        } else {
+            Class iter = child;
+            while(!iter.equals(Object.class)) {
+                iter = iter.getSuperclass();
+                if (iter.equals(parent)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
