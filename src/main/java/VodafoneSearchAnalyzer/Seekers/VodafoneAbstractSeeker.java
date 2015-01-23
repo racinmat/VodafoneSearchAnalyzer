@@ -23,23 +23,23 @@ public abstract class VodafoneAbstractSeeker {
     protected String prefix;
     protected String suffix;
     protected SeekingLocation seekingLocation;
-    protected int results;
+    protected int resultsCount;
     private boolean printDebugInfo = false;
 
-//    public abstract List<VodafoneSearchAnalyzer.SearchResult.SearchResult> searchForWord(String word, int results) throws IOException;
+//    public abstract List<VodafoneSearchAnalyzer.SearchResult.SearchResult> searchForWord(String word, int resultsCount) throws IOException;
 
     public VodafoneAbstractSeeker(String prefix, String suffix, SeekingLocation seekingLocation, int results) {
         this.prefix = prefix;
         this.suffix = suffix;
         this.seekingLocation = seekingLocation;
-        this.results = results;
+        this.resultsCount = results;
     }
 
-//    public abstract List<String> getResults(String searchQuery, int results) throws IOException;
+//    public abstract List<String> getResultsCount(String searchQuery, int resultsCount) throws IOException;
 
     public List<AbstractSearchResult> searchForWord(SearchedWord word, int results, Category category, boolean lazy) throws IOException {
         if (printDebugInfo) {
-            System.out.println("Searching for word " + word + ", will read first " + results + " results.");
+            System.out.println("Searching for word " + word + ", will read first " + results + " resultsCount.");
         }
         List<String> resultList = getResults(createSearchQuery(word, category), results);
         if (printDebugInfo) {
@@ -59,7 +59,7 @@ public abstract class VodafoneAbstractSeeker {
 
     public List<AbstractSearchResult> searchForWord(SearchedWord word, int results, boolean lazy) throws IOException {
         if (printDebugInfo) {
-            System.out.println("Searching for word " + word + ", will read first " + results + " results.");
+            System.out.println("Searching for word " + word + ", will read first " + results + " resultsCount.");
         }
         List<String> resultList = getResults(createSearchQuery(word), results);
         if (printDebugInfo) {
@@ -74,7 +74,7 @@ public abstract class VodafoneAbstractSeeker {
         connection.timeout(3600000);
         Document document = connection.get();
         Elements links = document.select("div.searchResultItem.noImage>h3>a");
-        results = Math.min(links.size(), results);              //checks if number of results is greater or smaller than number of required results
+        results = Math.min(links.size(), results);              //checks if number of resultsCount is greater or smaller than number of required resultsCount
         for (int i = 0; i < results; i++) {
             Element searchResult = links.get(i);
             Elements linkAsCollection = searchResult.select("a");
@@ -89,11 +89,11 @@ public abstract class VodafoneAbstractSeeker {
         return seekingLocation;
     }
 
-    public int getResults() {
-        if(results == 0) {
-            throw new RuntimeException("results not set");
+    public int getResultsCount() {
+        if(resultsCount == 0) {
+            throw new RuntimeException("resultsCount not set");
         }
-        return results;
+        return resultsCount;
     }
 
     abstract public String createSearchQuery(SearchedWord word, Category category);

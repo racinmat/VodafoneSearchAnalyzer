@@ -3,6 +3,7 @@ package VodafoneSearchAnalyzer;
 import VodafoneSearchAnalyzer.SearchResult.AbstractSearchResult;
 import VodafoneSearchAnalyzer.SearchResult.LazySearchResult;
 import VodafoneSearchAnalyzer.SearchResult.NotLazySearchResult;
+import VodafoneSearchAnalyzer.SearchResult.SearchResultsCollection;
 import VodafoneSearchAnalyzer.SearchedWord.SearchedWord;
 import com.sun.javaws.exceptions.InvalidArgumentException;
 
@@ -15,7 +16,8 @@ public enum Serialized {
 
     SEARCH_WORDS("searchWords.azathoth", SearchedWord.class),
     SEARCH_RESULTS("searchResults.azathoth", NotLazySearchResult.class),
-    SEARCH_RESULTS_WITHOUT_TAGS("searchResultsWithoutTags.azathoth", LazySearchResult.class);
+    SEARCH_RESULTS_WITHOUT_TAGS("searchResultsWithoutTags.azathoth", LazySearchResult.class),
+    SEARCH_RESULTS_COLLECTION("searchResultsCollection.azathoth", SearchResultsCollection.class);
 
     private String filename;
     private Class objectClass;

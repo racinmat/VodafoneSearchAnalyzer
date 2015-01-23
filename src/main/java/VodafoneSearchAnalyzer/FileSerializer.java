@@ -2,6 +2,7 @@ package VodafoneSearchAnalyzer;
 
 import VodafoneSearchAnalyzer.SearchResult.LazySearchResult;
 import VodafoneSearchAnalyzer.SearchResult.NotLazySearchResult;
+import VodafoneSearchAnalyzer.SearchResult.SearchResultsCollection;
 import VodafoneSearchAnalyzer.SearchedWord.SearchedWord;
 import com.sun.javaws.exceptions.InvalidArgumentException;
 
@@ -15,8 +16,7 @@ public class FileSerializer {
 
     public static void serialize(List list) throws InvalidArgumentException, IOException {
         Serialized type = Serialized.createFromList(list);
-        FileOutputStream fileOut =
-                new FileOutputStream(type.getFilename());
+        FileOutputStream fileOut = new FileOutputStream(type.getFilename());
         ObjectOutputStream out = new ObjectOutputStream(fileOut);
         out.writeObject(list);
         out.close();
@@ -35,6 +35,10 @@ public class FileSerializer {
         return (List<SearchedWord>) loadFromFile(Serialized.SEARCH_WORDS.getFilename());
     }
 
+    public static List<SearchResultsCollection> deserializeSeachredWordCollections() {
+        return (List<SearchResultsCollection>) loadFromFile(Serialized.SEARCH_RESULTS_COLLECTION.getFilename());
+    }
+
     private static Object loadFromFile(String filename) {
         Object results;
         try {
@@ -48,7 +52,7 @@ public class FileSerializer {
             i.printStackTrace();
             return null;
         } catch(ClassNotFoundException c) {
-            System.out.println("Employee class not found");
+            System.out.println("class not found");
             c.printStackTrace();
             return null;
         }

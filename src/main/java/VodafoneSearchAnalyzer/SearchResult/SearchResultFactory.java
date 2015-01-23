@@ -45,7 +45,7 @@ public class SearchResultFactory {
             return new LazySearchResult(url, word, location);
         }
         if (printDebugInfo) {
-            System.out.println("creating results for "+url);
+            System.out.println("creating resultsCount for "+url);
         }
         if (url.endsWith(".pdf")) {
             return new PdfSearchResult(url, word, location);

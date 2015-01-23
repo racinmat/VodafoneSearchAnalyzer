@@ -26,16 +26,18 @@ public class OverAllSeeker {
         Collections.addAll(this.seekers, seekers);
     }
 
-    public List<AbstractSearchResult> searchForWords(List<SearchedWord> words, boolean lazy) throws IOException, InvalidArgumentException {
-        List<AbstractSearchResult> resultWebsites = new ArrayList<>();
+    public List<SearchResultsCollection> searchForWords(List<SearchedWord> words, boolean lazy) throws IOException, InvalidArgumentException {
+        List<SearchResultsCollection> resultWebsites = new ArrayList<>();
+        int remaining = words.size();
         for (SearchedWord word : words) {
-            int remaining = words.size();
             VodafoneAbstractSeeker seeker = chooseSeekerByWord(word);
+            SearchResultsCollection results = new SearchResultsCollection(word, seeker.getResultsCount());
             System.out.println("Seeking word "+word.toString()+" by seeker "+seeker.getClass()+".");
-            List<AbstractSearchResult> resultsForOneWord = seeker.searchForWord(word, seeker.getResults(), lazy);
-            resultWebsites.addAll(resultsForOneWord);
+            List<AbstractSearchResult> resultsForOneWord = seeker.searchForWord(word, seeker.getResultsCount(), lazy);
+            results.add(resultsForOneWord);
             remaining--;
             System.out.println(remaining);
+            resultWebsites.add(results);
         }
         return resultWebsites;
     }

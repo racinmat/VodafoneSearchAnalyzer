@@ -40,55 +40,57 @@ import javax.net.ssl.X509TrustManager;
 public class MainAnalyzer {
 
     public static void main(String[] args) throws Exception {
-//        setTrustAllCerts();
+        setTrustAllCerts();
+
 //        List<SearchedWord> wordsToBeSearched = SearchWordsProvider.getWordsToBeSearched();
 //        FileSerializer.serialize(wordsToBeSearched);
 //
 //        List<SearchedWord> wordsToBeSearched = FileSerializer.deserializeSearchedWords();
 //        System.out.println(wordsToBeSearched.size());
-        OverAllSeeker seeker = new OverAllSeeker(new PublicWebSeeker(10));
-//        List<AbstractSearchResult> results = seeker.searchForWords(wordsToBeSearched, true);        //it is lazy
+//        OverAllSeeker seeker = new OverAllSeeker(new PublicWebSeeker(10));
+//        List<SearchResultsCollection> results = seeker.searchForWords(wordsToBeSearched, true);        //it is lazy
 //        FileSerializer.serialize(results);
-//
-//        List<LazySearchResult> results = FileSerializer.deserializeSearchResultsWithoutTags();
-//        System.out.println("results size: "+results.size());
-//        List<AbstractSearchResult> loadedResults = seeker.lazyLoadResults(results);
-//        System.out.println("loaded results size: "+loadedResults.size());
+
+//        List<SearchResultsCollection> resultsCollection = FileSerializer.deserializeSeachredWordCollections();
+
+//        List<LazySearchResult> resultsCount = FileSerializer.deserializeSearchResultsWithoutTags();
+//        System.out.println("resultsCount size: "+resultsCount.size());
+//        List<AbstractSearchResult> loadedResults = seeker.lazyLoadResults(resultsCount);
+//        System.out.println("loaded resultsCount size: "+loadedResults.size());
 //        FileSerializer.serialize(loadedResults);
-
-
+//
 //        SearchResultsPersister persister = new SearchResultsPersister();
 //        persister.persistSearchResults(loadedResults);
-//        System.out.println("Everything is done.");
-////TODO: check if search results in excel and website are in same order, maybe new pojo for it?
+        System.out.println("Everything is done.");
+////TODO: check if search resultsCount in excel and website are in same order, maybe new pojo for it?
 //        Connection connection = Jsoup.connect("https://www.oskarta.cz/");
 //        Document page = connection.get();
 //        page.select("div[name=description]");
 
-        SearchedWord word = new SearchedWord("fa", 5, Category.WORLD_MANUALS, SeekingLocation.PUBLIC_WEB);
+//        SearchedWord word = new SearchedWord("fa", 5, Category.WORLD_MANUALS, SeekingLocation.PUBLIC_WEB);
 //        AbstractSearchResult result = new HttpsSearchResult("te", word, SeekingLocation.PUBLIC_WEB);
 //        System.out.println(result.getClass().equals(Serialized.SEARCH_RESULTS.getObjectClass()));
 //        List<AbstractSearchResult> list = new ArrayList<>();
 //        list.add(result);
 //        System.out.println(Serialized.createFromList(list).getObjectClass());
 
-//        List<NotLazySearchResult> results = FileSerializer.deserializeSearchResults();
-//        System.out.println(results.size());
+//        List<NotLazySearchResult> resultsCount = FileSerializer.deserializeSearchResults();
+//        System.out.println(resultsCount.size());
 //        int count = 0;
-//        for (AbstractSearchResult result : results) {
+//        for (AbstractSearchResult result : resultsCount) {
 //            if (result instanceof HttpsSearchResult) {
 //                count++;
 //            }
 //        }
 //        System.out.println(count);
-//        results = seeker.tryToReadHttpsResults(results);
+//        resultsCount = seeker.tryToReadHttpsResults(resultsCount);
 //        count = 0;
-//        for (AbstractSearchResult result : results) {
+//        for (AbstractSearchResult result : resultsCount) {
 //            if (result instanceof HttpsSearchResult) {
 //                count++;
 //            }
 //        }
-        System.out.println(seeker.chooseSeekerByWord(word));
+//        System.out.println(seeker.chooseSeekerByWord(word));
     }
 
     private static void setTrustAllCerts() throws Exception {

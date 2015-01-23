@@ -2,14 +2,16 @@ package VodafoneSearchAnalyzer.SearchResult;
 
 import VodafoneSearchAnalyzer.SearchedWord.SearchedWord;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
  * Created by Azathoth on 23. 1. 2015.
  */
-public class SearchResultsCollection implements Iterable {
+public class SearchResultsCollection implements Iterable, Serializable {
 
     private SearchedWord searchedWord;
     private Map<Integer, AbstractSearchResult> results;//indexed from 1
@@ -42,14 +44,20 @@ public class SearchResultsCollection implements Iterable {
         return this;
     }
 
+    public SearchResultsCollection add(List<AbstractSearchResult> results) {
+        for (AbstractSearchResult result : results) {
+            add(result);
+        }
+        return this;
+    }
+
     private int getResultsCount() {
         int size = results.size();
-        if (results.containsKey(size)) {
-            return size;
+        if (!results.containsKey(size) && size > 0) {
+            throw new RuntimeException("missing resultsCount");
         } else {
-            throw new RuntimeException("missing results");
+            return size;
         }
-
     }
 
     @Override
