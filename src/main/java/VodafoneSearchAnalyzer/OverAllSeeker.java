@@ -1,15 +1,13 @@
 package VodafoneSearchAnalyzer;
 
-import VodafoneSearchAnalyzer.SearchResult.AbstractSearchResult;
-import VodafoneSearchAnalyzer.SearchResult.LazySearchResult;
-import VodafoneSearchAnalyzer.SearchResult.NotLazySearchResult;
-import VodafoneSearchAnalyzer.SearchResult.SearchResultFactory;
+import VodafoneSearchAnalyzer.SearchResult.*;
 import VodafoneSearchAnalyzer.SearchedWord.SearchedWord;
 import VodafoneSearchAnalyzer.Seekers.VodafoneAbstractSeeker;
-import com.sun.org.apache.bcel.internal.generic.LUSHR;
+import com.sun.javaws.exceptions.InvalidArgumentException;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -25,31 +23,17 @@ public class OverAllSeeker {
 
     public OverAllSeeker(VodafoneAbstractSeeker... seekers) {
         this.seekers = new ArrayList<VodafoneAbstractSeeker>();
-        for (int i = 0; i < seekers.length; i++) {
-            this.seekers.add(seekers[i]);
-        }
+        Collections.addAll(this.seekers, seekers);
     }
 
-    public List<AbstractSearchResult> searchForWords(List<SearchedWord> words, int results, boolean lazy) throws IOException {
-        List<AbstractSearchResult> resultWebsites = new ArrayList<AbstractSearchResult>();
-        for (SearchedWord word : words)
-            for (VodafoneAbstractSeeker seeker : seekers) {
-                System.out.println("Seeking word "+word+" by seeker "+seeker.getClass()+".");
-                List<AbstractSearchResult> resultsForOneWord = seeker.searchForWord(word, results, lazy);
-                resultWebsites.addAll(resultsForOneWord);
-            }
-        return resultWebsites;
-    }
-
-    public List<AbstractSearchResult> searchForWords(List<SearchedWord> words, boolean lazy) throws IOException {
+    public List<AbstractSearchResult> searchForWords(List<SearchedWord> words, boolean lazy) throws IOException, InvalidArgumentException {
         List<AbstractSearchResult> resultWebsites = new ArrayList<>();
-        int remaining = words.size();
         for (SearchedWord word : words) {
-            for (VodafoneAbstractSeeker seeker : seekers) {
-                System.out.println("Seeking word "+word+" by seeker "+seeker.getClass()+".");
-                List<AbstractSearchResult> resultsForOneWord = seeker.searchForWord(word, seeker.getResults(), lazy);
-                resultWebsites.addAll(resultsForOneWord);
-            }
+            int remaining = words.size();
+            VodafoneAbstractSeeker seeker = chooseSeekerByWord(word);
+            System.out.println("Seeking word "+word.toString()+" by seeker "+seeker.getClass()+".");
+            List<AbstractSearchResult> resultsForOneWord = seeker.searchForWord(word, seeker.getResults(), lazy);
+            resultWebsites.addAll(resultsForOneWord);
             remaining--;
             System.out.println(remaining);
         }
@@ -63,9 +47,28 @@ public class OverAllSeeker {
             results.add(SearchResultFactory.createSearchResult(lazyResult));
             count--;
             System.out.println(count);
-
         }
         return results;
     }
 
+    public List<NotLazySearchResult> tryToReadHttpsResults(List<NotLazySearchResult> results) throws IOException {
+        for (int i = 0; i < results.size(); i++) {
+            if (results.get(i) instanceof HttpsSearchResult) {
+                results.set(i, SearchResultFactory.createAgainFromExistingResult(results.get(i)));
+                System.out.println(i);
+            }
+        }
+        return results;
+    }
+
+    public VodafoneAbstractSeeker chooseSeekerByWord(SearchedWord word) throws InvalidArgumentException {
+        Class seekerClass = word.getLocation().getSeekerClass();
+        for (VodafoneAbstractSeeker seeker : seekers) {
+            if (seeker.getClass().equals(seekerClass)) {
+                return seeker;
+            }
+        }
+        String[] arguments = {"No seeker is set for this word", word.toString()};
+        throw new InvalidArgumentException(arguments);
+    }
 }

@@ -1,5 +1,6 @@
 package VodafoneSearchAnalyzer;
 
+import VodafoneSearchAnalyzer.Seekers.PublicWebSeeker;
 import com.sun.javaws.exceptions.InvalidArgumentException;
 
 import java.io.Serializable;
@@ -9,16 +10,22 @@ import java.io.Serializable;
  */
 public enum SeekingLocation implements Serializable {
 
-    PUBLIC_WEB("Public web");
+    PUBLIC_WEB("Public web", PublicWebSeeker.class);
 
     private String reportName;
+    private Class seekerClass;
 
-    SeekingLocation(String reportName) {
+    SeekingLocation(String reportName, Class seekerClass) {
         this.reportName = reportName;
+        this.seekerClass = seekerClass;
     }
 
     public String getReportName() {
         return reportName;
+    }
+
+    public Class getSeekerClass() {
+        return seekerClass;
     }
 
     public static SeekingLocation createFromReportName(String reportName) throws InvalidArgumentException {

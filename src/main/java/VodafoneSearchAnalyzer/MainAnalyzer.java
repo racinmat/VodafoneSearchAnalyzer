@@ -12,6 +12,12 @@ import org.jsoup.nodes.Document;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 /**
  Copyright (c) 2014, Matěj Račinský
@@ -34,44 +40,85 @@ import java.util.List;
 public class MainAnalyzer {
 
     public static void main(String[] args) throws Exception {
+//        setTrustAllCerts();
 //        List<SearchedWord> wordsToBeSearched = SearchWordsProvider.getWordsToBeSearched();
 //        FileSerializer.serialize(wordsToBeSearched);
-
+//
 //        List<SearchedWord> wordsToBeSearched = FileSerializer.deserializeSearchedWords();
 //        System.out.println(wordsToBeSearched.size());
-//        VodafoneSearchAnalyzer.OverAllSeeker seeker = new VodafoneSearchAnalyzer.OverAllSeeker(new PublicWebSeeker(10));
+        OverAllSeeker seeker = new OverAllSeeker(new PublicWebSeeker(10));
 //        List<AbstractSearchResult> results = seeker.searchForWords(wordsToBeSearched, true);        //it is lazy
 //        FileSerializer.serialize(results);
-
+//
 //        List<LazySearchResult> results = FileSerializer.deserializeSearchResultsWithoutTags();
 //        System.out.println("results size: "+results.size());
 //        List<AbstractSearchResult> loadedResults = seeker.lazyLoadResults(results);
 //        System.out.println("loaded results size: "+loadedResults.size());
 //        FileSerializer.serialize(loadedResults);
 
+
 //        SearchResultsPersister persister = new SearchResultsPersister();
 //        persister.persistSearchResults(loadedResults);
 //        System.out.println("Everything is done.");
-
+////TODO: check if search results in excel and website are in same order, maybe new pojo for it?
 //        Connection connection = Jsoup.connect("https://www.oskarta.cz/");
 //        Document page = connection.get();
 //        page.select("div[name=description]");
 
-//        AbstractSearchResult result = new HttpsSearchResult("te", new SearchedWord("fa", 5, Category.WORLD_MANUALS, SeekingLocation.PUBLIC_WEB), SeekingLocation.PUBLIC_WEB);
+        SearchedWord word = new SearchedWord("fa", 5, Category.WORLD_MANUALS, SeekingLocation.PUBLIC_WEB);
+//        AbstractSearchResult result = new HttpsSearchResult("te", word, SeekingLocation.PUBLIC_WEB);
 //        System.out.println(result.getClass().equals(Serialized.SEARCH_RESULTS.getObjectClass()));
 //        List<AbstractSearchResult> list = new ArrayList<>();
 //        list.add(result);
 //        System.out.println(Serialized.createFromList(list).getObjectClass());
 
-        List<NotLazySearchResult> results = FileSerializer.deserializeSearchResults();
-        System.out.println(results.size());
-        int count = 0;
-        for (NotLazySearchResult result : results) {
-            if (result instanceof HttpsSearchResult) {
-                count++;
-            }
-        }
-        System.out.println(count);
+//        List<NotLazySearchResult> results = FileSerializer.deserializeSearchResults();
+//        System.out.println(results.size());
+//        int count = 0;
+//        for (AbstractSearchResult result : results) {
+//            if (result instanceof HttpsSearchResult) {
+//                count++;
+//            }
+//        }
+//        System.out.println(count);
+//        results = seeker.tryToReadHttpsResults(results);
+//        count = 0;
+//        for (AbstractSearchResult result : results) {
+//            if (result instanceof HttpsSearchResult) {
+//                count++;
+//            }
+//        }
+        System.out.println(seeker.chooseSeekerByWord(word));
     }
+
+    private static void setTrustAllCerts() throws Exception {
+        TrustManager[] trustAllCerts = new TrustManager[]{
+                new X509TrustManager() {
+                    public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                        return null;
+                    }
+                    public void checkClientTrusted( java.security.cert.X509Certificate[] certs, String authType ) {	}
+                    public void checkServerTrusted( java.security.cert.X509Certificate[] certs, String authType ) {	}
+                }
+        };
+
+        // Install the all-trusting trust manager
+        try {
+            SSLContext sc = SSLContext.getInstance( "SSL" );
+            sc.init( null, trustAllCerts, new java.security.SecureRandom() );
+            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+            HttpsURLConnection.setDefaultHostnameVerifier(
+                    new HostnameVerifier() {
+                        public boolean verify(String urlHostName, SSLSession session) {
+                            return true;
+                        }
+                    });
+        }
+        catch ( Exception e ) {
+            //We can not recover from this exception.
+            e.printStackTrace();
+        }
+    }
+
 
 }

@@ -21,6 +21,26 @@ public class SearchResultFactory {
     private static boolean printDebugInfo = false;
 
     public static AbstractSearchResult createSearchResult(String url, SearchedWord word, SeekingLocation location, boolean lazy) throws IOException {
+        return createSearchResult(url, word, location, lazy, false);
+    }
+
+    public static NotLazySearchResult createSearchResult(LazySearchResult lazyResult) throws IOException {
+        return createNotLazySearchResult(lazyResult.getUrl(), lazyResult.getSearchedWord(), lazyResult.getLocation(), true);
+    }
+
+    public static NotLazySearchResult createAgainFromExistingResult(AbstractSearchResult result) throws IOException {
+        return createNotLazySearchResult(result.getUrl(), result.getSearchedWord(), result.getLocation(), true);
+    }
+
+    private static NotLazySearchResult createNotLazySearchResult(String url, SearchedWord word, SeekingLocation location, boolean readHttps) throws IOException {
+        AbstractSearchResult result = createSearchResult(url, word, location, false, readHttps);
+        if (result instanceof NotLazySearchResult) {
+            return (NotLazySearchResult) result;
+        }
+        throw new RuntimeException("something is wrong with class of result");
+    }
+
+    private static AbstractSearchResult createSearchResult(String url, SearchedWord word, SeekingLocation location, boolean lazy, boolean readHttps) throws IOException {
         if (lazy) {
             return new LazySearchResult(url, word, location);
         }
@@ -29,7 +49,7 @@ public class SearchResultFactory {
         }
         if (url.endsWith(".pdf")) {
             return new PdfSearchResult(url, word, location);
-        } else if (url.startsWith("https")) {
+        } else if (!readHttps && url.startsWith("https")) {
             return new HttpsSearchResult(url, word, location);
         } else {
             Connection connection = Jsoup.connect(url);
@@ -61,10 +81,6 @@ public class SearchResultFactory {
                 return null;
             }
         }
-    }
-
-    public static AbstractSearchResult createSearchResult(LazySearchResult lazyResult) throws IOException {
-        return createSearchResult(lazyResult.getUrl(), lazyResult.getSearchedWord(), lazyResult.getLocation(), false);
     }
 
 }
