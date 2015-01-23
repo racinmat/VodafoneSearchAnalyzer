@@ -42,11 +42,22 @@ public class OverAllSeeker {
         return resultWebsites;
     }
 
-    public List<AbstractSearchResult> lazyLoadResults(List<LazySearchResult> lazyResults) throws IOException {
+    public List<SearchResultsCollection> lazyLoadResults(List<SearchResultsCollection> wordResults, boolean isSearchResultCollection) throws IOException, InvalidArgumentException {
+        for (SearchResultsCollection wordResult : wordResults) {
+            List<AbstractSearchResult> lazyResults = wordResult.getAsList();
+            wordResult.replaceLazyResultByLoadedResult(lazyLoadResults(lazyResults));
+        }
+        return wordResults;
+    }
+    
+    public List<AbstractSearchResult> lazyLoadResults(List<AbstractSearchResult> lazyResults) throws IOException {
         List<AbstractSearchResult> results = new ArrayList<>();
         int count = lazyResults.size();
-        for (LazySearchResult lazyResult : lazyResults) {
-            results.add(SearchResultFactory.createSearchResult(lazyResult));
+        for (AbstractSearchResult lazyResult : lazyResults) {
+            if(lazyResult instanceof LazySearchResult) {
+                LazySearchResult temp = (LazySearchResult) lazyResult;
+                results.add(SearchResultFactory.createSearchResult(temp));
+            }
             count--;
             System.out.println(count);
         }

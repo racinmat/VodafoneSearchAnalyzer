@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Locale;
 
 import VodafoneSearchAnalyzer.SearchResult.AbstractSearchResult;
+import VodafoneSearchAnalyzer.SearchResult.SearchResultsCollection;
 import jxl.CellView;
 import jxl.Workbook;
 import jxl.WorkbookSettings;
@@ -28,21 +29,29 @@ public class WriteExcel {
     private WritableCellFormat timesBoldUnderline;
     private WritableCellFormat times;
     private String outputFile;
+    private WritableSheet excelSheet;
+    private WritableWorkbook workbook;
 
     public void setOutputFile(String inputFile) {
         this.outputFile = inputFile;
     }
 
-    public void write(List<AbstractSearchResult> results) throws IOException, WriteException {
+
+    private void initWriting() throws IOException, WriteException {
         File file = new File(outputFile);
         WorkbookSettings wbSettings = new WorkbookSettings();
 
         wbSettings.setLocale(new Locale("cs", "CS"));
 
-        WritableWorkbook workbook = Workbook.createWorkbook(file, wbSettings);
+        workbook = Workbook.createWorkbook(file, wbSettings);
         workbook.createSheet("Sheet1", 0);
-        WritableSheet excelSheet = workbook.getSheet(0);
+        excelSheet = workbook.getSheet(0);
         createLabel(excelSheet);
+
+    }
+
+    public void write(List<SearchResultsCollection> results) throws IOException, WriteException {
+        initWriting();
         createContent(excelSheet, results);
 
         workbook.write();
@@ -78,32 +87,21 @@ public class WriteExcel {
         //column, row
     }
 
-    private void createContent(WritableSheet sheet, List<AbstractSearchResult> results) throws WriteException {
-        sortResults(results);
-        boolean sameWordSearched = false;
-        boolean sameSection = false;
-        for (int i = 0; i < results.size(); i++) {
-            int row = i+1;
-            if (i > 0) {
-                sameSection = results.get(i-1).getLocation().equals(results.get(i).getLocation());
-                sameWordSearched = results.get(i-1).getSearchedWord().equals(results.get(i).getSearchedWord());
+    private void createContent(WritableSheet sheet, List<SearchResultsCollection> results) throws WriteException {
+        int row = 1;
+        for (SearchResultsCollection resultCollection : results) {
+            addLabel(sheet, 0, row, resultCollection.getSearchedWord().getLocation().getReportName());
+            addLabel(sheet, 1, row, resultCollection.getSearchedWord().getWord());
+            addLabel(sheet, 2, row, Integer.toString(resultCollection.getSearchedWord().getCountOfSearching()));
+            for (AbstractSearchResult result : resultCollection) {
+                addLabel(sheet, 3, row, result.getUrl());
+                addLabel(sheet, 4, row, result.getMetatagsForOutput());
+                row++;
             }
-            if (!sameSection) {
-                addLabel(sheet, 0, row, results.get(i).getLocation().getReportName());
-            }
-            if (!sameWordSearched) {
-                addLabel(sheet, 1, row, results.get(i).getSearchedWord().getWord());
-                addLabel(sheet, 2, row, Integer.toString(results.get(i).getSearchedWord().getCountOfSearching()));
-            }
-
-            addLabel(sheet, 3, row, results.get(i).getUrl());
-            addLabel(sheet, 4, row, results.get(i).getMetatagsForOutput());
-
             sheet.setRowView(row, 3000);
         }
         sheet.setColumnView(3, 10000);
         sheet.setColumnView(4, 6000);
-
     }
 
     private void addCaption(WritableSheet sheet, int column, int row, String s) throws WriteException {
@@ -122,10 +120,5 @@ public class WriteExcel {
         Label label = new Label(column, row, s, times);
         sheet.addCell(label);
     }
-
-    private void sortResults(List<AbstractSearchResult> results) {
-        Collections.sort(results);
-    }
-
 
 }

@@ -1,17 +1,15 @@
 package VodafoneSearchAnalyzer.SearchResult;
 
 import VodafoneSearchAnalyzer.SearchedWord.SearchedWord;
+import com.sun.javaws.exceptions.InvalidArgumentException;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Azathoth on 23. 1. 2015.
  */
-public class SearchResultsCollection implements Iterable, Serializable {
+public class SearchResultsCollection implements Iterable<AbstractSearchResult>, Serializable {
 
     private SearchedWord searchedWord;
     private Map<Integer, AbstractSearchResult> results;//indexed from 1
@@ -61,7 +59,7 @@ public class SearchResultsCollection implements Iterable, Serializable {
     }
 
     @Override
-    public Iterator iterator() {
+    public Iterator<AbstractSearchResult> iterator() {
         return new MyIterator();
     }
 
@@ -86,4 +84,28 @@ public class SearchResultsCollection implements Iterable, Serializable {
         }
     }
 
+    public List<AbstractSearchResult> getAsList() {
+        List<AbstractSearchResult> list = new ArrayList<>();
+        for (AbstractSearchResult result : results.values()) {
+            list.add(result);
+        }
+        return list;
+    }
+
+    public void replaceLazyResultByLoadedResult(AbstractSearchResult result) throws InvalidArgumentException {
+        for (Map.Entry<Integer, AbstractSearchResult> resultEntry : results.entrySet()) {
+            if (resultEntry.getValue().getUrl().equals(result.getUrl())) {
+                results.put(resultEntry.getKey(), result);
+                return;
+            }
+        }
+        String[] arguments = {"in this collection is no result with this url", result.toString()};
+        throw new InvalidArgumentException(arguments);
+    }
+
+    public void replaceLazyResultByLoadedResult(List<AbstractSearchResult> result) throws InvalidArgumentException {
+        for (AbstractSearchResult notLazySearchResult : result) {
+            replaceLazyResultByLoadedResult(notLazySearchResult);
+        }
+    }
 }

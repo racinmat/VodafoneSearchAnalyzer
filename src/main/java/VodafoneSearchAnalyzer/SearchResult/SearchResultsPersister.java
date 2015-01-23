@@ -11,9 +11,10 @@ import java.util.List;
  */
 public class SearchResultsPersister {
 
-    public void persistSearchResults(List<AbstractSearchResult> results) throws IOException, WriteException {
+    public void persistSearchResults(List<SearchResultsCollection> results) throws IOException, WriteException {
         WriteExcel sheet = new WriteExcel();
         sheet.setOutputFile("Output.xls");
         sheet.write(results);
     }
+
 }

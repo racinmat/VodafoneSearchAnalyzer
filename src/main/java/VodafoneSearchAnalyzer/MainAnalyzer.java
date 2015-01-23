@@ -41,26 +41,26 @@ public class MainAnalyzer {
 
     public static void main(String[] args) throws Exception {
         setTrustAllCerts();
+        OverAllSeeker seeker = new OverAllSeeker(new PublicWebSeeker(10));
 
 //        List<SearchedWord> wordsToBeSearched = SearchWordsProvider.getWordsToBeSearched();
 //        FileSerializer.serialize(wordsToBeSearched);
 //
 //        List<SearchedWord> wordsToBeSearched = FileSerializer.deserializeSearchedWords();
 //        System.out.println(wordsToBeSearched.size());
-//        OverAllSeeker seeker = new OverAllSeeker(new PublicWebSeeker(10));
 //        List<SearchResultsCollection> results = seeker.searchForWords(wordsToBeSearched, true);        //it is lazy
 //        FileSerializer.serialize(results);
 
-//        List<SearchResultsCollection> resultsCollection = FileSerializer.deserializeSeachredWordCollections();
+        List<SearchResultsCollection> resultsCollection = FileSerializer.deserializeSeachredWordCollections();
 
 //        List<LazySearchResult> resultsCount = FileSerializer.deserializeSearchResultsWithoutTags();
-//        System.out.println("resultsCount size: "+resultsCount.size());
-//        List<AbstractSearchResult> loadedResults = seeker.lazyLoadResults(resultsCount);
-//        System.out.println("loaded resultsCount size: "+loadedResults.size());
-//        FileSerializer.serialize(loadedResults);
+        System.out.println("resultsCount size: "+resultsCollection.size());
+        List<SearchResultsCollection> loadedResults = seeker.lazyLoadResults(resultsCollection, true);
+        System.out.println("loaded resultsCount size: "+loadedResults.size());
+        FileSerializer.serialize(loadedResults);
 //
-//        SearchResultsPersister persister = new SearchResultsPersister();
-//        persister.persistSearchResults(loadedResults);
+        SearchResultsPersister persister = new SearchResultsPersister();
+        persister.persistSearchResults(loadedResults);
         System.out.println("Everything is done.");
 ////TODO: check if search resultsCount in excel and website are in same order, maybe new pojo for it?
 //        Connection connection = Jsoup.connect("https://www.oskarta.cz/");
