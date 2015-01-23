@@ -98,9 +98,9 @@ public class WriteExcel {
                 addLabel(sheet, 4, row, result.getMetatagsForOutput());
                 row++;
             }
-            sheet.setRowView(row, 3000);
+            sheet.setRowView(row, 1000);
         }
-        sheet.setColumnView(3, 10000);
+        sheet.setColumnView(3, 20000);
         sheet.setColumnView(4, 6000);
     }
 

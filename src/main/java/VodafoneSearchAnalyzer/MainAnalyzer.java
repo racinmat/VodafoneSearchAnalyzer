@@ -50,19 +50,21 @@ public class MainAnalyzer {
 //        System.out.println(wordsToBeSearched.size());
 //        List<SearchResultsCollection> results = seeker.searchForWords(wordsToBeSearched, true);        //it is lazy
 //        FileSerializer.serialize(results);
-
-        List<SearchResultsCollection> resultsCollection = FileSerializer.deserializeSeachredWordCollections();
+//
+//        System.out.println("serialized");
+//        List<SearchResultsCollection> resultsCollection = FileSerializer.deserializeSeachredWordCollections();
 
 //        List<LazySearchResult> resultsCount = FileSerializer.deserializeSearchResultsWithoutTags();
-        System.out.println("resultsCount size: "+resultsCollection.size());
-        List<SearchResultsCollection> loadedResults = seeker.lazyLoadResults(resultsCollection, true);
-        System.out.println("loaded resultsCount size: "+loadedResults.size());
-        FileSerializer.serialize(loadedResults);
+//        System.out.println("resultsCount size: "+resultsCollection.size());
+//        List<SearchResultsCollection> loadedResults = seeker.lazyLoadResults(resultsCollection, true);
+//        System.out.println("loaded resultsCount size: "+loadedResults.size());
+//        FileSerializer.serialize(loadedResults);
 //
+        List<SearchResultsCollection> loadedResults = FileSerializer.deserializeSeachredWordCollections();
         SearchResultsPersister persister = new SearchResultsPersister();
         persister.persistSearchResults(loadedResults);
         System.out.println("Everything is done.");
-////TODO: check if search resultsCount in excel and website are in same order, maybe new pojo for it?
+//
 //        Connection connection = Jsoup.connect("https://www.oskarta.cz/");
 //        Document page = connection.get();
 //        page.select("div[name=description]");

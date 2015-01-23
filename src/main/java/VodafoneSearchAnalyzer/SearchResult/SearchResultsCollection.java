@@ -69,7 +69,7 @@ public class SearchResultsCollection implements Iterable<AbstractSearchResult>, 
 
         @Override
         public boolean hasNext() {
-            return getResultsCount() == current;
+            return getResultsCount() > current;
         }
 
         @Override
